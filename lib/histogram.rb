@@ -5,28 +5,23 @@ class Histogram
 
   def max_area
     @histogram.uniq.map do |num|
-      sum = max_consecutive(num) * num
-
-      sum
+      max_consecutive(num) * num
     end.max
   end
 
   private
 
   def max_consecutive(target)
-    total = 0
-    consecutive_sums = []
+    consecutive_sums = [0]
 
     @histogram.each do |hist_num|
       if hist_num >= target
-        total += 1
+        consecutive_sums[-1] += 1
       else
-        consecutive_sums << total
-        total = 0
+        consecutive_sums << 0
       end
     end
 
-    consecutive_sums << total
     consecutive_sums.max
   end
 end
