@@ -9,14 +9,8 @@ class Matrix
 
     @matrix.each do |row|
       row.each_with_index do |num, index|
-        if num.zero?
-          dynamic_row[index] = num
-          update_max(inner_digits.max)
-          inner_digits.reset!
-        else
-          dynamic_row[index] += num
-          inner_digits.add dynamic_row[index]
-        end
+        dynamic_row[index] = num.zero? ? 0 : dynamic_row[index] + num
+        inner_digits.add dynamic_row[index]
       end
 
       update_max(inner_digits.max)
