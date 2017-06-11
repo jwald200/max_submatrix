@@ -4,25 +4,23 @@ class Matrix
   end
 
   def max_submatrix
-    dynamic_row = Array.new(@matrix.first.size, 0)
-    inner_digits = InnerDigits.new
+    combined_row = @matrix.shift
 
     @matrix.each do |row|
-      row.each_with_index do |num, index|
-        dynamic_row[index] = num.zero? ? 0 : dynamic_row[index] + num
-        inner_digits.add dynamic_row[index]
-      end
+      update_max(combined_row)
 
-      update_max(inner_digits.max)
-      inner_digits.reset!
+      combined_row = row.map.with_index do |num, index|
+        num.zero? ? 0 : combined_row[index] + num
+      end
     end
 
-    @max
+    update_max(combined_row)
   end
 
   private
 
-  def update_max(num)
-    @max = [(@max || 0), (num || 0)].max
+  def update_max(combined_row)
+    hist = Histogram.new(combined_row)
+    @max = [@max || 0, hist.max_area].max
   end
 end
