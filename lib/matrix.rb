@@ -7,7 +7,8 @@ class Matrix
     combined_row = @matrix.shift
 
     @matrix.each do |row|
-      update_max(combined_row)
+      # We only need to update_max if the current row contains zeros
+      update_max(combined_row) if row.any?(&:zero?)
       combined_row = row.map.with_index do |num, index|
         num.zero? ? 0 : combined_row[index] + num
       end
