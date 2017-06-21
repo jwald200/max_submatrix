@@ -7,8 +7,7 @@ class Matrix
     combined_row = @matrix.shift
 
     @matrix.each do |row|
-      update_max(combined_row) if combined_row.any?(&:zero?)
-
+      update_max(combined_row)
       combined_row = row.map.with_index do |num, index|
         num.zero? ? 0 : combined_row[index] + num
       end
